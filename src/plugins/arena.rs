@@ -1,12 +1,13 @@
-use bevy::{ecs::query, prelude::*};
+use bevy::prelude::*;
 
-use super::torii::{self, ToriiResource};
+use super::torii::ToriiResource;
 use torii_grpc::types::schema::Model;
 
 pub struct ArenaPlugin;
 impl Plugin for ArenaPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Update, spawn_arena);
+        app.add_systems(PostStartup, render_setup)
+            .add_systems(Update, spawn_arena);
     }
 }
 
@@ -35,6 +36,31 @@ fn spawn_arena(torii: Res<ToriiResource>, query: Query<&Arena>, mut commands: Co
             }
         }
     }
+}
+
+fn render_setup(
+    mut commands: Commands,
+    query: Query<&Arena>,
+    asset_server: Res<AssetServer>,
+    mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
+) {
+    // let arena = query.single();
+
+    let texture: Handle<Image> = asset_server.load("stone_ground.png");
+    let layout = TextureAtlasLayout::from_grid(Vec2::new(32., 32.), 8, 8, None, None);
+    let texture_atlas_layout = texture_atlas_layouts.add(layout);
+
+    commands.spawn((
+        SpriteBundle {
+            transform: Transform::from_scale(Vec3::splat(6.0)),
+            texture,
+            ..default()
+        },
+        TextureAtlas {
+            layout: texture_atlas_layout,
+            index: 27,
+        },
+    ));
 }
 
 fn get_entity_data(model: Option<&Model>) -> (u32, u32) {
