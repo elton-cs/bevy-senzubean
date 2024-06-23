@@ -51,46 +51,48 @@ fn render_arena(
     asset_server: Res<AssetServer>,
     mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
 ) {
-    if query.iter().count() == 1 && query2.iter().count() == 0 {
-        let texture: Handle<Image> = asset_server.load("stone_ground.png");
-        let layout = TextureAtlasLayout::from_grid(Vec2::new(32., 32.), 8, 8, None, None);
-        let texture_atlas_layout = texture_atlas_layouts.add(layout);
+    for arena in query.iter() {
+        if query2.iter().count() == 0 {
+            let texture: Handle<Image> = asset_server.load("stone_ground.png");
+            let layout = TextureAtlasLayout::from_grid(Vec2::new(32., 32.), 8, 8, None, None);
+            let texture_atlas_layout = texture_atlas_layouts.add(layout);
 
-        commands.spawn(RenderedArena);
+            commands.spawn(RenderedArena);
 
-        for i in 0..7 {
-            for j in 0..3 {
-                commands.spawn((
-                    SpriteBundle {
-                        transform: Transform::from_translation(Vec3::new(
-                            i as f32 * MULTIPLIER,
-                            j as f32 * MULTIPLIER,
-                            0.0,
-                        )),
-                        texture: texture.clone(),
-                        ..default()
-                    },
-                    TextureAtlas {
-                        layout: texture_atlas_layout.clone(),
-                        index: 0,
-                    },
-                ));
+            for i in 0..arena.x {
+                for j in 0..arena.y {
+                    commands.spawn((
+                        SpriteBundle {
+                            transform: Transform::from_translation(Vec3::new(
+                                i as f32 * MULTIPLIER,
+                                j as f32 * MULTIPLIER,
+                                0.0,
+                            )),
+                            texture: texture.clone(),
+                            ..default()
+                        },
+                        TextureAtlas {
+                            layout: texture_atlas_layout.clone(),
+                            index: 0,
+                        },
+                    ));
 
-                // commands.entity(rendered_arena).insert((
-                //     SpriteBundle {
-                //         transform: Transform::from_translation(Vec3::new(
-                //             i as f32 * MULTIPLIER,
-                //             j as f32 * MULTIPLIER,
-                //             0.0,
-                //         )),
-                //         texture: texture.clone(),
-                //         ..default()
-                //     },
-                //     TextureAtlas {
-                //         layout: texture_atlas_layout.clone(),
-                //         index: 0,
-                //     },
-                // ));
+                    // commands.entity(rendered_arena).insert((
+                    //     SpriteBundle {
+                    //         transform: Transform::from_translation(Vec3::new(
+                    //             i as f32 * MULTIPLIER,
+                    //             j as f32 * MULTIPLIER,
+                    //             0.0,
+                    //         )),
+                    //         texture: texture.clone(),
+                    //         ..default()
+                    //     },
+                    //     TextureAtlas {
+                    //         layout: texture_atlas_layout.clone(),
+                    //         index: 0,
+                    //     },
+                    // ));
+                }
             }
         }
     }
