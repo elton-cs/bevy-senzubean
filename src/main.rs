@@ -1,13 +1,14 @@
 use bevy::{ecs::query, prelude::*};
-use bevy_senzubean::plugins::{arena::ArenaPlugin, torii::ToriiPlugin};
+use bevy_senzubean::plugins::{arena::ArenaPlugin, senzubean::SenzubeanPlugin, torii::ToriiPlugin};
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .add_plugins(ToriiPlugin)
         .add_plugins(ArenaPlugin)
+        .add_plugins(SenzubeanPlugin)
         .add_systems(Startup, spawn_camera_setup)
-        .add_systems(Update, list_entities)
+        // .add_systems(Update, list_entities)
         .run();
 }
 

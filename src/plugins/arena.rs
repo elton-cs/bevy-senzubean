@@ -1,8 +1,5 @@
-use std::any::Any;
-
-use bevy::{ecs::query, prelude::*};
-
 use super::torii::ToriiResource;
+use bevy::prelude::*;
 use torii_grpc::types::schema::Model;
 
 pub struct ArenaPlugin;
@@ -20,7 +17,6 @@ struct Arena {
 
 #[derive(Component, Debug, Copy, Clone)]
 struct RenderedArena;
-
 const MULTIPLIER: f32 = 32.0;
 
 fn spawn_arena(torii: Res<ToriiResource>, query: Query<&Arena>, mut commands: Commands) {
@@ -76,22 +72,6 @@ fn render_arena(
                             index: 0,
                         },
                     ));
-
-                    // commands.entity(rendered_arena).insert((
-                    //     SpriteBundle {
-                    //         transform: Transform::from_translation(Vec3::new(
-                    //             i as f32 * MULTIPLIER,
-                    //             j as f32 * MULTIPLIER,
-                    //             0.0,
-                    //         )),
-                    //         texture: texture.clone(),
-                    //         ..default()
-                    //     },
-                    //     TextureAtlas {
-                    //         layout: texture_atlas_layout.clone(),
-                    //         index: 0,
-                    //     },
-                    // ));
                 }
             }
         }
