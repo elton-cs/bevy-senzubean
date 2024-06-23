@@ -8,13 +8,13 @@ pub struct ToriiPlugin;
 impl Plugin for ToriiPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Startup, setup_tokio_and_torii)
-            .add_systems(Update, update_torii_data);
+            .add_systems(PreUpdate, update_torii_data);
     }
 }
 
 #[derive(Resource)]
-struct ToriiResource {
-    entity: ToriiData,
+pub struct ToriiResource {
+    pub data: ToriiData,
     rx: tokio::sync::mpsc::Receiver<ToriiData>,
 }
 
@@ -38,14 +38,14 @@ fn setup_tokio_and_torii(mut commands: Commands) {
     };
 
     commands.insert_resource(ToriiResource {
-        entity: default_entity,
+        data: default_entity,
         rx,
     });
 }
 
-fn update_torii_data(mut torii_entity: ResMut<ToriiResource>) {
-    if let Ok(new_entity) = torii_entity.rx.try_recv() {
-        info!("Message from Torii Client: {:?}", new_entity);
-        torii_entity.entity = new_entity;
+fn update_torii_data(mut torii: ResMut<ToriiResource>) {
+    if let Ok(new_data) = torii.rx.try_recv() {
+        // info!("Message from Torii Client: {:?}", new_data);
+        torii.data = new_data;
     }
 }
