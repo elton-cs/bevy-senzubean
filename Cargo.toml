@@ -5,6 +5,12 @@ edition = "2021"
 
 [dependencies]
 bevy = { version = "0.13.2", features = ["dynamic_linking"] }
+starknet-crypto = "0.6.2"
+starknet-ff = "0.3.7"
+tokio = "1.38.0"
+tokio-stream = "0.1.15"
+torii-client = {git = "https://github.com/dojoengine/dojo.git" }
+torii-grpc = {git = "https://github.com/dojoengine/dojo.git" }
 
 # Enable a small amount of optimization in debug mode
 [profile.dev]

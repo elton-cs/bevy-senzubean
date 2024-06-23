@@ -1,0 +1,192 @@
+Message from Torii Client: Entity { hashed_keys: FieldElement { inner: 0x054f58c4a92809851a5e76be80aeeb01a3cf35db8479d83468b4e7467703f666
+    }, models: [Model { name: "Player", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "position", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(0))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(1))), key: false
+                            }
+                        ]
+                    }), key: false
+                }, Member { name: "health", ty: Primitive(U8(Some(3))), key: false
+                }
+            ]
+        }, Model { name: "Senzubean", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "point", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(6))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(2))), key: false
+                            }
+                        ]
+                    }), key: false
+                }, Member { name: "is_eaten", ty: Primitive(Bool(Some(false))), key: false
+                }
+            ]
+        }, Model { name: "Arena", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "bounds", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(6))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(3))), key: false
+                            }
+                        ]
+                    }), key: false
+                }
+            ]
+        }
+    ]
+}
+2024-06-23T08: 04: 58.527669Z  INFO bevy_senzubean: Message from Torii Client: Entity { hashed_keys: FieldElement { inner: 0x054f58c4a92809851a5e76be80aeeb01a3cf35db8479d83468b4e7467703f666
+    }, models: [Model { name: "Player", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "position", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(0))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(1))), key: false
+                            }
+                        ]
+                    }), key: false
+                }, Member { name: "health", ty: Primitive(U8(Some(3))), key: false
+                }
+            ]
+        }, Model { name: "Senzubean", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "point", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(6))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(2))), key: false
+                            }
+                        ]
+                    }), key: false
+                }, Member { name: "is_eaten", ty: Primitive(Bool(Some(false))), key: false
+                }
+            ]
+        }, Model { name: "Arena", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "bounds", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(6))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(3))), key: false
+                            }
+                        ]
+                    }), key: false
+                }
+            ]
+        }
+    ]
+}
+2024-06-23T08: 05: 01.529134Z  INFO bevy_senzubean: Message from Torii Client: Entity { hashed_keys: FieldElement { inner: 0x054f58c4a92809851a5e76be80aeeb01a3cf35db8479d83468b4e7467703f666
+    }, models: [Model { name: "Player", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "position", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(0))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(1))), key: false
+                            }
+                        ]
+                    }), key: false
+                }, Member { name: "health", ty: Primitive(U8(Some(3))), key: false
+                }
+            ]
+        }, Model { name: "Senzubean", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "point", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(6))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(2))), key: false
+                            }
+                        ]
+                    }), key: false
+                }, Member { name: "is_eaten", ty: Primitive(Bool(Some(false))), key: false
+                }
+            ]
+        }, Model { name: "Arena", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "bounds", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(6))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(3))), key: false
+                            }
+                        ]
+                    }), key: false
+                }
+            ]
+        }
+    ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Message from Torii Client: Entity { hashed_keys: FieldElement { inner: 0x054f58c4a92809851a5e76be80aeeb01a3cf35db8479d83468b4e7467703f666
+    }, models: [Model { name: "Arena", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "bounds", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(6))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(3))), key: false
+                            }
+                        ]
+                    }), key: false
+                }
+            ]
+        }
+    ]
+}
+2024-06-23T08: 08: 14.236911Z  INFO bevy_senzubean: Message from Torii Client: Entity { hashed_keys: FieldElement { inner: 0x054f58c4a92809851a5e76be80aeeb01a3cf35db8479d83468b4e7467703f666
+    }, models: [Model { name: "Senzubean", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "point", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(6))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(2))), key: false
+                            }
+                        ]
+                    }), key: false
+                }, Member { name: "is_eaten", ty: Primitive(Bool(Some(false))), key: false
+                }
+            ]
+        }, Model { name: "Arena", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "bounds", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(6))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(3))), key: false
+                            }
+                        ]
+                    }), key: false
+                }
+            ]
+        }
+    ]
+}
+2024-06-23T08: 08: 17.240780Z  INFO bevy_senzubean: Message from Torii Client: Entity { hashed_keys: FieldElement { inner: 0x054f58c4a92809851a5e76be80aeeb01a3cf35db8479d83468b4e7467703f666
+    }, models: [Model { name: "Player", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "position", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(0))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(1))), key: false
+                            }
+                        ]
+                    }), key: false
+                }, Member { name: "health", ty: Primitive(U8(Some(3))), key: false
+                }
+            ]
+        }, Model { name: "Senzubean", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "point", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(6))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(2))), key: false
+                            }
+                        ]
+                    }), key: false
+                }, Member { name: "is_eaten", ty: Primitive(Bool(Some(false))), key: false
+                }
+            ]
+        }, Model { name: "Arena", members: [Member { name: "player_id", ty: Primitive(Felt252(Some(FieldElement { inner: 0x00b3ff441a68610b30fd5e2abbf3a1548eb6ba6f3559f2862bf2dc757e5828ca
+                    }))), key: true
+                }, Member { name: "bounds", ty: Struct(Struct { name: "Vec2D", children: [Member { name: "x", ty: Primitive(U32(Some(6))), key: false
+                            }, Member { name: "y", ty: Primitive(U32(Some(3))), key: false
+                            }
+                        ]
+                    }), key: false
+                }
+            ]
+        }
+    ]
+}
