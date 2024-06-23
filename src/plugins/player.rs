@@ -1,11 +1,12 @@
 use super::torii::ToriiResource;
-use bevy::prelude::*;
+use bevy::{prelude::*, transform};
 use torii_grpc::types::schema::Model;
 
 pub struct PlayerPlugin;
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(Update, (spawn_player, render_player_spawn, update_player_position_and_health))
+        .add_systems(PostUpdate, render_player_move)
         // .add_systems(Update, test_render)
         ;
     }
@@ -49,7 +50,6 @@ fn spawn_player(torii: Res<ToriiResource>, query: Query<&Player>, mut commands: 
 }
 
 fn update_player_position_and_health(
-    mut commands: Commands,
     mut query: Query<(&mut Player, &mut Health)>,
     torii: Res<ToriiResource>,
 ) {
@@ -81,40 +81,6 @@ fn update_player_position_and_health(
             }
             None => {}
         }
-    }
-}
-
-fn test_render(
-    mut commands: Commands,
-    query2: Query<&RenderedPlayer>,
-    asset_server: Res<AssetServer>,
-    mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
-) {
-    if query2.iter().count() == 0 {
-        let texture: Handle<Image> = asset_server.load("boy.png");
-        let layout = TextureAtlasLayout::from_grid(Vec2::new(16., 16.), 4, 7, None, None);
-        let texture_atlas_layout = texture_atlas_layouts.add(layout);
-
-        commands.spawn(RenderedPlayer);
-
-        commands.spawn((
-            SpriteBundle {
-                transform: Transform::from_translation(Vec3::new(
-                    ((0 + 1) as f32 - 1.) * MULTIPLIER,
-                    ((1 + 1) as f32 - 1.) * MULTIPLIER,
-                    // 0 as f32 * MULTIPLIER,
-                    // 0 as f32 * MULTIPLIER,
-                    1.0,
-                ))
-                .with_scale(SCALE),
-                texture: texture.clone(),
-                ..default()
-            },
-            TextureAtlas {
-                layout: texture_atlas_layout.clone(),
-                index: 3,
-            },
-        ));
     }
 }
 
@@ -157,7 +123,54 @@ fn render_player_spawn(
     }
 }
 
-fn render_move() {}
+fn render_player_move(
+    query: Query<&Player>,
+    mut query2: Query<&mut Transform, With<RenderedPlayer>>,
+) {
+    for mut transform in query2.iter_mut() {
+        for player in query.iter() {
+            transform.translation = Vec3::new(
+                ((player.x + 1) as f32 - 1.) * MULTIPLIER,
+                ((player.y + 1) as f32 - 1.) * MULTIPLIER,
+                1.0,
+            );
+        }
+    }
+}
+
+fn test_render(
+    mut commands: Commands,
+    query2: Query<&RenderedPlayer>,
+    asset_server: Res<AssetServer>,
+    mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
+) {
+    if query2.iter().count() == 0 {
+        let texture: Handle<Image> = asset_server.load("boy.png");
+        let layout = TextureAtlasLayout::from_grid(Vec2::new(16., 16.), 4, 7, None, None);
+        let texture_atlas_layout = texture_atlas_layouts.add(layout);
+
+        commands.spawn(RenderedPlayer);
+
+        commands.spawn((
+            SpriteBundle {
+                transform: Transform::from_translation(Vec3::new(
+                    ((0 + 1) as f32 - 1.) * MULTIPLIER,
+                    ((1 + 1) as f32 - 1.) * MULTIPLIER,
+                    // 0 as f32 * MULTIPLIER,
+                    // 0 as f32 * MULTIPLIER,
+                    1.0,
+                ))
+                .with_scale(SCALE),
+                texture: texture.clone(),
+                ..default()
+            },
+            TextureAtlas {
+                layout: texture_atlas_layout.clone(),
+                index: 3,
+            },
+        ));
+    }
+}
 
 fn get_entity_data(model: Option<&Model>) -> (u32, u32, Option<u8>) {
     if let Some(model) = model {
