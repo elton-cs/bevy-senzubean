@@ -103,8 +103,8 @@ fn render_player_spawn(
             commands.spawn((
                 SpriteBundle {
                     transform: Transform::from_translation(Vec3::new(
-                        ((player.x + 1) as f32 - 1.) * MULTIPLIER,
-                        ((player.y + 1) as f32 - 1.) * MULTIPLIER,
+                        ((player.x) as f32 - 1.) * MULTIPLIER,
+                        ((player.y) as f32 - 1.) * MULTIPLIER,
                         // 0 as f32 * MULTIPLIER,
                         // 0 as f32 * MULTIPLIER,
                         1.0,
@@ -130,8 +130,8 @@ fn render_player_move(
     for mut transform in query2.iter_mut() {
         for player in query.iter() {
             transform.translation = Vec3::new(
-                ((player.x + 1) as f32 - 1.) * MULTIPLIER,
-                ((player.y + 1) as f32 - 1.) * MULTIPLIER,
+                ((player.x) as f32 - 1.) * MULTIPLIER,
+                ((player.y) as f32 - 1.) * MULTIPLIER,
                 1.0,
             );
         }
