@@ -1,4 +1,6 @@
-use bevy::prelude::*;
+use std::any::Any;
+
+use bevy::{ecs::query, prelude::*};
 
 use super::torii::ToriiResource;
 use torii_grpc::types::schema::Model;
@@ -6,8 +8,7 @@ use torii_grpc::types::schema::Model;
 pub struct ArenaPlugin;
 impl Plugin for ArenaPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(PostStartup, render_setup)
-            .add_systems(Update, spawn_arena);
+        app.add_systems(Update, (spawn_arena, render_arena));
     }
 }
 
@@ -16,6 +17,11 @@ struct Arena {
     x: u32,
     y: u32,
 }
+
+#[derive(Component, Debug, Copy, Clone)]
+struct RenderedArena;
+
+const MULTIPLIER: f32 = 32.0;
 
 fn spawn_arena(torii: Res<ToriiResource>, query: Query<&Arena>, mut commands: Commands) {
     if query.iter().count() == 0 {
@@ -38,29 +44,56 @@ fn spawn_arena(torii: Res<ToriiResource>, query: Query<&Arena>, mut commands: Co
     }
 }
 
-fn render_setup(
+fn render_arena(
     mut commands: Commands,
     query: Query<&Arena>,
+    query2: Query<&RenderedArena>,
     asset_server: Res<AssetServer>,
     mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
 ) {
-    // let arena = query.single();
+    if query.iter().count() == 1 && query2.iter().count() == 0 {
+        let texture: Handle<Image> = asset_server.load("stone_ground.png");
+        let layout = TextureAtlasLayout::from_grid(Vec2::new(32., 32.), 8, 8, None, None);
+        let texture_atlas_layout = texture_atlas_layouts.add(layout);
 
-    let texture: Handle<Image> = asset_server.load("stone_ground.png");
-    let layout = TextureAtlasLayout::from_grid(Vec2::new(32., 32.), 8, 8, None, None);
-    let texture_atlas_layout = texture_atlas_layouts.add(layout);
+        commands.spawn(RenderedArena);
 
-    commands.spawn((
-        SpriteBundle {
-            transform: Transform::from_scale(Vec3::splat(6.0)),
-            texture,
-            ..default()
-        },
-        TextureAtlas {
-            layout: texture_atlas_layout,
-            index: 27,
-        },
-    ));
+        for i in 0..7 {
+            for j in 0..3 {
+                commands.spawn((
+                    SpriteBundle {
+                        transform: Transform::from_translation(Vec3::new(
+                            i as f32 * MULTIPLIER,
+                            j as f32 * MULTIPLIER,
+                            0.0,
+                        )),
+                        texture: texture.clone(),
+                        ..default()
+                    },
+                    TextureAtlas {
+                        layout: texture_atlas_layout.clone(),
+                        index: 0,
+                    },
+                ));
+
+                // commands.entity(rendered_arena).insert((
+                //     SpriteBundle {
+                //         transform: Transform::from_translation(Vec3::new(
+                //             i as f32 * MULTIPLIER,
+                //             j as f32 * MULTIPLIER,
+                //             0.0,
+                //         )),
+                //         texture: texture.clone(),
+                //         ..default()
+                //     },
+                //     TextureAtlas {
+                //         layout: texture_atlas_layout.clone(),
+                //         index: 0,
+                //     },
+                // ));
+            }
+        }
+    }
 }
 
 fn get_entity_data(model: Option<&Model>) -> (u32, u32) {
