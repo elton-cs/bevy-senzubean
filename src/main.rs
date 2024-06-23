@@ -1,4 +1,4 @@
-use bevy::{ecs::query, prelude::*};
+use bevy::{ecs::query, prelude::*, render::camera};
 use bevy_senzubean::plugins::{arena::ArenaPlugin, senzubean::SenzubeanPlugin, torii::ToriiPlugin};
 
 fn main() {
@@ -13,7 +13,10 @@ fn main() {
 }
 
 fn spawn_camera_setup(mut commands: Commands) {
-    commands.spawn(Camera2dBundle::default());
+    let mut camera = Camera2dBundle::default();
+    camera.transform.translation = Vec3::new(100.0, 50.0, 1.0);
+    camera.projection.scale = 0.25;
+    commands.spawn(camera);
 }
 
 fn list_entities(query: Query<Entity>) {
