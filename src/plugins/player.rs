@@ -5,7 +5,7 @@ use torii_grpc::types::schema::Model;
 pub struct PlayerPlugin;
 impl Plugin for PlayerPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Update, (spawn_player, render_player))
+        app.add_systems(Update, (spawn_player, render_player_spawn, update_player_position_and_health))
         // .add_systems(Update, test_render)
         ;
     }
@@ -48,6 +48,42 @@ fn spawn_player(torii: Res<ToriiResource>, query: Query<&Player>, mut commands: 
     }
 }
 
+fn update_player_position_and_health(
+    mut commands: Commands,
+    mut query: Query<(&mut Player, &mut Health)>,
+    torii: Res<ToriiResource>,
+) {
+    for (mut player, mut health) in query.iter_mut() {
+        let model = torii.data.models.iter().find_map(|model| {
+            if model.name == "Player" {
+                Some(model)
+            } else {
+                None
+            }
+        });
+
+        let (x, y, hp) = get_entity_data(model);
+        if x != player.x {
+            info!(
+                "Player moved from ({}, {}) to ({}, {})",
+                player.x, player.y, x, y
+            );
+            player.x = x;
+            player.y = y;
+        }
+
+        match hp {
+            Some(hp) => {
+                if hp != health.value {
+                    info!("Player damaged. HP dropped from {} to {}", health.value, hp);
+                    health.value = hp;
+                }
+            }
+            None => {}
+        }
+    }
+}
+
 fn test_render(
     mut commands: Commands,
     query2: Query<&RenderedPlayer>,
@@ -82,20 +118,21 @@ fn test_render(
     }
 }
 
-fn render_player(
+fn render_player_spawn(
     mut commands: Commands,
     query: Query<&Player>,
     query2: Query<&RenderedPlayer>,
     asset_server: Res<AssetServer>,
     mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
 ) {
+    let num_rendered = query2.iter().count();
     for player in query.iter() {
-        if query2.iter().count() == 0 {
+        if num_rendered == 0 {
             let texture: Handle<Image> = asset_server.load("boy.png");
             let layout = TextureAtlasLayout::from_grid(Vec2::new(16., 16.), 4, 7, None, None);
             let texture_atlas_layout = texture_atlas_layouts.add(layout);
 
-            commands.spawn(RenderedPlayer);
+            // commands.spawn(RenderedPlayer);
 
             commands.spawn((
                 SpriteBundle {
@@ -114,10 +151,13 @@ fn render_player(
                     layout: texture_atlas_layout.clone(),
                     index: 3,
                 },
+                RenderedPlayer,
             ));
         }
     }
 }
+
+fn render_move() {}
 
 fn get_entity_data(model: Option<&Model>) -> (u32, u32, Option<u8>) {
     if let Some(model) = model {
