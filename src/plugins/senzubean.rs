@@ -5,7 +5,10 @@ use torii_grpc::types::schema::Model;
 pub struct SenzubeanPlugin;
 impl Plugin for SenzubeanPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Update, (spawn_senzubean, render_arena));
+        app
+            .add_systems(Update, (spawn_senzubean, render_senzubean))
+            // .add_systems(Update, test_render)
+            ;
     }
 }
 
@@ -19,7 +22,7 @@ struct Senzubean {
 #[derive(Component, Debug, Copy, Clone)]
 struct RenderedSenzubean;
 const MULTIPLIER: f32 = 32.0;
-const SCALE: Vec3 = Vec3::splat(0.3);
+const SCALE: Vec3 = Vec3::splat(0.8);
 
 fn spawn_senzubean(torii: Res<ToriiResource>, query: Query<&Senzubean>, mut commands: Commands) {
     if query.iter().count() == 0 {
@@ -42,40 +45,56 @@ fn spawn_senzubean(torii: Res<ToriiResource>, query: Query<&Senzubean>, mut comm
     }
 }
 
-fn render_arena(
+fn render_senzubean(
     mut commands: Commands,
     query: Query<&Senzubean>,
     query2: Query<&RenderedSenzubean>,
     asset_server: Res<AssetServer>,
-    mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
 ) {
     for senzubean in query.iter() {
         if query2.iter().count() == 0 {
-            let texture: Handle<Image> = asset_server.load("bean.png");
-            let layout = TextureAtlasLayout::from_grid(Vec2::new(64., 64.), 6, 15, None, None);
-            let texture_atlas_layout = texture_atlas_layouts.add(layout);
+            let texture = asset_server.load("Onigiri.png");
 
             commands.spawn(RenderedSenzubean);
 
-            commands.spawn((
-                SpriteBundle {
-                    transform: Transform::from_translation(Vec3::new(
-                        (senzubean.x as f32 - 1.) * MULTIPLIER,
-                        (senzubean.y as f32 - 1.) * MULTIPLIER,
-                        // 0 as f32 * MULTIPLIER,
-                        // 0 as f32 * MULTIPLIER,
-                        1.0,
-                    ))
-                    .with_scale(SCALE),
-                    texture: texture.clone(),
-                    ..default()
-                },
-                TextureAtlas {
-                    layout: texture_atlas_layout.clone(),
-                    index: 89,
-                },
-            ));
+            commands.spawn((SpriteBundle {
+                transform: Transform::from_translation(Vec3::new(
+                    (senzubean.x as f32 - 1.) * MULTIPLIER,
+                    (senzubean.y as f32 - 1.) * MULTIPLIER,
+                    // 0 as f32 * MULTIPLIER,
+                    // 0 as f32 * MULTIPLIER,
+                    1.0,
+                ))
+                .with_scale(SCALE),
+                texture: texture.clone(),
+                ..default()
+            },));
         }
+    }
+}
+
+fn test_render(
+    mut commands: Commands,
+    query2: Query<&RenderedSenzubean>,
+    asset_server: Res<AssetServer>,
+) {
+    if query2.iter().count() == 0 {
+        let texture = asset_server.load("Onigiri.png");
+
+        commands.spawn(RenderedSenzubean);
+
+        commands.spawn((SpriteBundle {
+            transform: Transform::from_translation(Vec3::new(
+                (6 as f32 - 1.) * MULTIPLIER,
+                (2 as f32 - 1.) * MULTIPLIER,
+                // 0 as f32 * MULTIPLIER,
+                // 0 as f32 * MULTIPLIER,
+                1.0,
+            ))
+            .with_scale(SCALE),
+            texture: texture.clone(),
+            ..default()
+        },));
     }
 }
 

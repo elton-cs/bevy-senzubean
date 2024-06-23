@@ -1,5 +1,7 @@
-use bevy::{ecs::query, prelude::*, render::camera};
-use bevy_senzubean::plugins::{arena::ArenaPlugin, senzubean::SenzubeanPlugin, torii::ToriiPlugin};
+use bevy::prelude::*;
+use bevy_senzubean::plugins::{
+    arena::ArenaPlugin, player::PlayerPlugin, senzubean::SenzubeanPlugin, torii::ToriiPlugin,
+};
 
 fn main() {
     App::new()
@@ -7,6 +9,7 @@ fn main() {
         .add_plugins(ToriiPlugin)
         .add_plugins(ArenaPlugin)
         .add_plugins(SenzubeanPlugin)
+        .add_plugins(PlayerPlugin)
         .add_systems(Startup, spawn_camera_setup)
         // .add_systems(Update, list_entities)
         .run();
