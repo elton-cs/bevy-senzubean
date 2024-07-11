@@ -1,5 +1,5 @@
 use super::torii::ToriiResource;
-use bevy::{prelude::*, transform};
+use bevy::prelude::*;
 use torii_grpc::types::schema::Model;
 
 pub struct PlayerPlugin;

@@ -4,7 +4,10 @@ use std::vec;
 use tokio::sync::mpsc::Sender;
 use tokio_stream::StreamExt;
 use torii_client::client::Client;
-use torii_grpc::{client::EntityUpdateStreaming, types::schema::Entity};
+use torii_grpc::{
+    client::EntityUpdateStreaming,
+    types::{schema::Entity, EntityKeysClause},
+};
 
 pub async fn run_torii_client(tx: Sender<Entity>) {
     // client configuration
@@ -23,7 +26,7 @@ pub async fn run_torii_client(tx: Sender<Entity>) {
     .unwrap();
 
     // create a new client
-    let client: Client = Client::new(torii_url, rpc_url, relay_url, world, None)
+    let client: Client = Client::new(torii_url, rpc_url, relay_url, world)
         .await
         .unwrap();
 
@@ -55,7 +58,8 @@ async fn get_entities_stream(
     let hashed_keys = poseidon_hash_many(&vec_keys);
 
     // subscribe to updates on models with player's contract address as key
-    let stream = client.on_entity_updated(vec![hashed_keys]).await.unwrap();
+    let entity_keys_clause = Some(EntityKeysClause::HashedKeys(vec![hashed_keys]));
+    let stream = client.on_entity_updated(entity_keys_clause).await.unwrap();
 
     stream
 }

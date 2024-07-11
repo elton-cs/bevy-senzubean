@@ -9,8 +9,8 @@ starknet-crypto = "0.6.2"
 starknet-ff = "0.3.7"
 tokio = "1.38.0"
 tokio-stream = "0.1.15"
-torii-client = {git = "https://github.com/dojoengine/dojo.git" }
-torii-grpc = {git = "https://github.com/dojoengine/dojo.git" }
+torii-client = {git = "https://github.com/dojoengine/dojo.git" , tag = "v0.7.3"}
+torii-grpc = {git = "https://github.com/dojoengine/dojo.git" , tag = "v0.7.3"}
 
 # Enable a small amount of optimization in debug mode
 [profile.dev]
